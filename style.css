@@ -130,6 +130,7 @@ main {
   height: 100%;
   text-align: center;
   padding: 20px;
+  min-height: 500px;
 }
 .page.active {
   display: block;
