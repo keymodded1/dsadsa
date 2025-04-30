@@ -1,59 +1,37 @@
-
-body {
-  background: black;
-  position: relative;
-  margin: 0;
-  padding: 0;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: inherit;
-  filter: blur(10px) brightness(0.4) contrast(1.1);
-  z-index: -1;
-}
-
-body {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  background: url('https://cdn.pixabay.com/photo/2015/01/08/18/29/newspaper-593310_1280.jpg') center center / cover no-repeat fixed;
-  position: relative;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: inherit;
-  opacity: 0.6; background: black;
-  z-index: -1;
-}
-
 :root {
   --neon: #00f7ff;
   --dark-bg: #0f0f0f;
-  --glass: rgba(255,255,255,0.05);
+  --glass: rgba(255, 255, 255, 0.05);
+  --text-color: #f8f8f8;
 }
 
+/* Genel Ayarlar */
 * {
   box-sizing: border-box;
 }
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, var(--dark-bg), #1a1a1a);
-  color: #f8f8f8;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  position: relative;
+  color: var(--text-color);
+  background: linear-gradient(135deg, var(--dark-bg), #1a1a1a),
+              url('https://cdn.pixabay.com/photo/2015/01/08/18/29/newspaper-593310_1280.jpg') center center / cover no-repeat fixed;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: black;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+/* Header */
 header {
   text-align: center;
   padding: 20px 0;
@@ -73,6 +51,7 @@ h1 {
   margin: 0;
 }
 
+/* Navigasyon Butonları */
 .nav-buttons {
   margin: 15px auto 10px;
   display: flex;
@@ -83,7 +62,7 @@ h1 {
 
 .nav-buttons button {
   padding: 10px 18px;
-  background-color: transparent;
+  background: transparent;
   border: 2px solid var(--neon);
   color: var(--neon);
   border-radius: 30px;
@@ -91,8 +70,6 @@ h1 {
   cursor: pointer;
   transition: 0.3s;
   box-shadow: 0 0 10px var(--neon);
-  position: relative;
-  z-index: 1;
 }
 
 .nav-buttons button:hover,
@@ -102,6 +79,7 @@ h1 {
   box-shadow: 0 0 25px var(--neon);
 }
 
+/* Ana İçerik */
 main {
   max-width: 900px;
   margin: 40px auto;
@@ -116,12 +94,15 @@ main {
   transform: translateY(30px);
   transition: opacity 0.8s ease, transform 0.8s ease;
   min-height: 400px;
-}
-.page {
   padding: 20px;
-  max-width: 900px;
-  margin: 0 auto;
 }
+
+.page.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .page-content {
   display: flex;
   flex-direction: column;
@@ -130,21 +111,16 @@ main {
   height: 100%;
   text-align: center;
   padding: 20px;
-  min-height: 500px;
-}
-.page.active {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
 }
 
+/* İçerik Kartları */
 article, .question, .riddles {
   background-color: var(--glass);
   padding: 20px;
   border-radius: 15px;
   margin-bottom: 20px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 0 10px rgba(0,255,255,0.2);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
   transition: 0.3s ease;
 }
 
@@ -152,6 +128,7 @@ article:hover, .question:hover {
   box-shadow: 0 0 30px var(--neon);
 }
 
+/* Quiz Soruları */
 .question p {
   font-weight: bold;
   color: var(--neon);
@@ -196,6 +173,93 @@ button.wrong {
   margin-top: 30px;
 }
 
+/* Riddle */
+.riddles p {
+  cursor: pointer;
+  position: relative;
+  padding-left: 25px;
+}
+
+.riddles p:hover {
+  color: #0ff;
+}
+
+.riddle-answer {
+  display: none;
+  font-weight: bold;
+  color: #0f0;
+}
+
+/* Geçiş Efekti */
+#page-transition {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+#page-transition.active {
+  opacity: 0.8;
+  pointer-events: all;
+}
+
+/* Intro Ekranı */
+#intro-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  color: var(--neon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 2rem;
+  z-index: 99999;
+  animation: fadeOutIntro 3s ease 2s forwards;
+}
+
+#intro-screen h1 {
+  font-size: 3rem;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+#intro-screen span {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+/* Bilgi Paneli */
+.info-panel {
+  margin-bottom: 15px;
+}
+
+.info-panel button {
+  background: var(--neon);
+  border: none;
+  color: black;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.info-content {
+  display: none;
+  background: rgba(0, 255, 255, 0.1);
+  padding: 10px 15px;
+  border-left: 4px solid var(--neon);
+  border-radius: 8px;
+}
+
+/* Responsive */
 @media screen and (max-width: 600px) {
   h1 {
     font-size: 2rem;
@@ -214,6 +278,7 @@ button.wrong {
   }
 }
 
+/* Animasyonlar */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -226,147 +291,24 @@ button.wrong {
 }
 
 @keyframes shake {
-  0% { transform: translateX(0px); }
+  0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-6px); }
   50% { transform: translateX(6px); }
   75% { transform: translateX(-6px); }
-  100% { transform: translateX(0px); }
-}
-
-.riddles p {
-  cursor: pointer;
-  position: relative;
-  padding-left: 25px;
-}
-.riddles p:hover {
-  color: #0ff;
-}
-.riddle-answer {
-  display: none;
-  color: #0f0;
-  font-weight: bold;
-}
-
-#page-transition {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: black;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transition: opacity 0.5s ease;
-}
-#page-transition.active {
-  opacity: 0.8;
-  pointer-events: all;
-}
-
-
-/* Gazete blur arka plan */
-body {
-  background: black;
-  position: relative;
-  margin: 0;
-  padding: 0;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: inherit;
-  opacity: 0.6; background: black;
-  z-index: -1;
-}
-
-/* Geçiş efekti ekranı */
-#page-transition {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  z-index: 9999;
-}
-#page-transition.active {
-  opacity: 0.8;
-  pointer-events: all;
-}
-
-/* Riddle */
-.riddle-answer {
-  font-weight: bold;
-  color: #0f0;
-}
-
-
-/* Intro animation */
-#intro-screen {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: black;
-  color: #00f7ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  font-size: 2rem;
-  z-index: 99999;
-  animation: fadeOutIntro 3s ease 2s forwards;
-}
-#intro-screen h1 {
-  text-align: center;
-  font-size: 3rem;
-  animation: glow 2s ease-in-out infinite alternate;
-}
-#intro-screen span {
-  display: block;
-  font-size: 1.5rem;
-  margin-top: 10px;
 }
 
 @keyframes glow {
   from {
-    text-shadow: 0 0 10px #00f7ff;
+    text-shadow: 0 0 10px var(--neon);
   }
   to {
-    text-shadow: 0 0 30px #00f7ff, 0 0 60px #00f7ff;
+    text-shadow: 0 0 30px var(--neon), 0 0 60px var(--neon);
   }
 }
+
 @keyframes fadeOutIntro {
   to {
     opacity: 0;
     visibility: hidden;
   }
-}
-
-/* Info Panel */
-.info-panel {
-  margin-bottom: 15px;
-}
-.info-panel button {
-  background: #00f7ff;
-  border: none;
-  color: black;
-  font-weight: bold;
-  padding: 8px 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-bottom: 5px;
-}
-.info-content {
-  display: none;
-  background: rgba(0,255,255,0.1);
-  padding: 10px 15px;
-  border-left: 4px solid #00f7ff;
-  border-radius: 8px;
 }
