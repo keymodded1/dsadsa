@@ -124,3 +124,7 @@ function showPage(n) {
     });
   }, 300);
 }
+function toggleNavbar() {
+  const header = document.querySelector('header');
+  header.classList.toggle('nav-open');
+}
