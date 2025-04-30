@@ -312,25 +312,44 @@ button.wrong {
     visibility: hidden;
   }
 }
-/* Close button styling */
-.close-navbar {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+/* Menü açma ve kapama düğmeleri */
+.open-navbar, .close-navbar {
+  position: fixed;
+  top: 15px;
+  right: 15px;
   background-color: transparent;
   border: none;
-  font-size: 24px;
+  font-size: 28px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 1001;
+  display: none;
 }
 
+/* Sadece mobilde görünür */
 @media (max-width: 768px) {
+  .open-navbar {
+    display: block;
+  }
+
   header .nav-buttons {
     display: none;
     flex-direction: column;
     gap: 10px;
+    margin-top: 20px;
   }
+
   header.nav-open .nav-buttons {
     display: flex;
+  }
+
+  .close-navbar {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  header {
+    position: relative;
   }
 }
