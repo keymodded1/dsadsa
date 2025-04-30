@@ -122,6 +122,15 @@ main {
   max-width: 900px;
   margin: 0 auto;
 }
+.page-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  padding: 20px;
+}
 .page.active {
   display: block;
   opacity: 1;
