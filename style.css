@@ -83,8 +83,6 @@ h1 {
 main {
   max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
-  min-height: 500px;
   animation: fadeInUp 1s ease;
 }
 
